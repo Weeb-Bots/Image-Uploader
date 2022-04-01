@@ -91,7 +91,7 @@ async def upload(path, msg):
     os.remove(path)
     await sleep(3)
  
-async def caption(wala, caption, loop):
+async def caption(wala, caption, loop: int):
    if loop > 3:
      return await wala.reply_text("Caption Could Not Be Modified", quote=True)
    else:
