@@ -49,7 +49,7 @@ async def mainreq(msg: message, client):
    url = text.replace("/ul ")
    first = await msg.reply_text(f"**Processing Your Link:-**\n\n{url}")
    try:
-        download = wget.download(url)
+        download = wget.download(url, DOWNLOAD_LOCATION)
    except Exception as e:
         LOGGER.info(str(e))
         await first.delete()
@@ -64,24 +64,25 @@ async def mainreq(msg: message, client):
 
 async def upload(path, msg):
    if os.path.isdir(path):
-      await mess.reply_text("Uploading Folder Is Prohibited For Me.\n**I Can Only Upload A Single File.**", parse_mode='md', quote=False)
+      await mess.reply_text("Uploading Folder Is Prohibited For Me.\n**I Can Only Upload A Single File.**", parse_mode='md')
       shutil.rmtree(path)
       return
     elif not os.path.exists(path):
-      return await mess.reply_text(f"`{path}` File Not Found")
+      return await mess.reply_text(f"`{path}` Not Found")
     else:
       pass
     up = await mess.reply_text("`Uploading...`")
     filename = path if not path.find("/") else path.split("/")[-1]
-    cap = f"{filename}\n\n@Anime_Pile_Wallpaper"
+    cap = f"{filename}"
     try:
       if filename.endswith((".mkv",".mp4")):
          await mess.reply_video(path, caption=cap, quote=True, progress=progress, progress_args=(total, current, up))
       if filename.endswith((".jpg",".png",".jpeg",".webm")):
-         phwala = await mess.reply_photo(path, quote=False, progress=progress, progress_args=(total, current, up))
-         await caption(phwala, 0)
-         docwala = await mess.reply_document(path, quote=False, force_document=True, progress=progress, progress_args=(total, current, up))
-         await caption(docwala, 0)
+         wala = await mess.reply_photo(path, quote=False, progress=progress, progress_args=(total, current, up))
+         caption = f"({wala.photo.width}x{wala.photo.height})\n\n@Anime_Pile_Wallpaper"
+         await caption(wala, caption, 0)
+         wala2 = await mess.reply_document(path, quote=False, force_document=True, progress=progress, progress_args=(total, current, up))
+         await caption(wala2, caption, 0)
       else:
          await mess.reply_document(path, caption=cap, quote=True, progress=progress, progress_args=(total, current, up))
     except Exception as e:
@@ -90,16 +91,16 @@ async def upload(path, msg):
     os.remove(path)
     await sleep(3)
  
-async def caption(wala, loop):
+async def caption(wala, caption, loop):
    if loop > 3:
      return await wala.reply_text("Caption Could Not Be Modified", quote=True)
    else:
      try:
-       cap = await wala.edit_text(f"({docwala.photo.width}x{docwala.photo.height})")
+       cap = await wala.edit_text(caption)
      except Exception as e:
        LOGGER.info(e)
        loop += 1
-       await sleep(1.5)
+       await sleep(1)
        await caption(docwala, loop)
    return cap
 
