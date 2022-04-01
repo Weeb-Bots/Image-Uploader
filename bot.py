@@ -99,9 +99,8 @@ async def caption(wala, caption, loop):
        cap = await wala.edit_text(caption)
      except Exception as e:
        LOGGER.info(e)
-       loop += 1
        await sleep(1)
-       await caption(docwala, loop)
+       await caption(wala, caption, loop+1)
    return cap
 
 AP.run()
