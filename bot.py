@@ -63,7 +63,7 @@ async def mainreq(msg: message, client):
    await upload(download, msg)
 
 async def upload(path, msg):
-   if os.path.isdir(path):
+    if os.path.isdir(path):
       await mess.reply_text("Uploading Folder Is Prohibited For Me.\n**I Can Only Upload A Single File.**", parse_mode='md')
       shutil.rmtree(path)
       return
