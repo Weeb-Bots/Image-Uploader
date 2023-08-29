@@ -47,7 +47,7 @@ async def help(_, msg: Message):
 async def mainreq(_, msg: Message):
    text = msg.text
    await msg.reply_text(msg)
-   if bool(text.find("/ul ")):
+   if bool(msg.command[1]):
      url = msg.command[1]
    else:
      return await msg.reply_text("**ᴤᴇɴᴅ ʏᴏᴜʀ ʟɪɴᴋ ᴡɪᴛʜ ᴛʜᴇ ᴄᴍᴅ**")
