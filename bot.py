@@ -45,6 +45,7 @@ async def help(_, msg: Message):
 @AP.on_message(filters.private & filters.incoming & filters.command("ul", prefix))
 async def mainreq(_, msg: Message):
    text = msg.text
+  await msg.reply_text(msg)
    if not bool(text.find(" ")):
      return await msg.reply_text("**ᴤᴇɴᴅ ʏᴏᴜʀ ʟɪɴᴋ ᴡɪᴛʜ ᴛʜᴇ ᴄᴍᴅ**")
    url = text.replace("/ul ", "")
