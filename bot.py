@@ -35,12 +35,12 @@ if not os.path.exists(DOWNLOAD_LOCATION):
 async def start(_, msg: Message):
    user = msg.from_user
    text = f"ʜᴇʟʟᴏ {user.mention(style='md')},\nᴛʜɪs ʙᴏᴛ ɪs sᴘᴇᴄɪᴀʟ ᴍᴀᴅᴇ ғᴏʀ ᴀɴɪᴍᴇ ᴡᴀʟʟᴘᴀᴘᴇʀ ᴄʜᴀɴɴᴇʟ ғᴏʀ @Anime_Pile ᴀɴᴅ ᴛʜɪs ʙᴏᴛ ᴄᴀɴ ᴜᴘʟᴏᴀᴅ sɪɴɢʟᴇ ғɪʟᴇs ᴛᴏ ᴛᴇʟᴇɢʀᴀᴍ ɪɴ ʙᴏᴛʜ ᴛʏᴘᴇs ᴏʀ ɪɴ sɪɴɢʟᴇ ᴛʏᴘᴇ."
-   await msg.reply_photo(image, caption=text, parse_mode='MARKDOWN', quote=True)
+   await msg.reply_photo(image, caption=text, quote=True)
 
 @AP.on_message(filters.private & filters.incoming & filters.command("help", prefix))
 async def help(_, msg: Message):
    text = "**Steps To Use This Bot:-**\n\n1. Get A Direct Dl-URL From Internet\n2. Paste The Link Here With /ul CMD.\n3. Choose Your Option From The Reply Keyboard.\n4. Just Wait Now For Your Link To Be Fullfill.(Will Get Error Msg When The Link is Wrong or Broken)"     
-   await msg.reply_photo(image, caption=text, parse_mode='MARKDOWN', quote=True)
+   await msg.reply_photo(image, caption=text, quote=True)
 
 @AP.on_message(filters.private & filters.incoming & filters.command("ul", prefix))
 async def mainreq(_, msg: Message):
@@ -65,7 +65,7 @@ async def mainreq(_, msg: Message):
 
 async def upload(path, msg):
     if os.path.isdir(path):
-      await msg.reply_text("Uploading Folder Is Prohibited For Me.\n**I Can Only Upload A Single File.**", parse_mode='MARKDOWN')
+      await msg.reply_text("Uploading Folder Is Prohibited For Me.\n**I Can Only Upload A Single File.**")
       shutil.rmtree(path)
       return
     elif not os.path.exists(path):
