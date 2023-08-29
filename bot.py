@@ -3,6 +3,7 @@ import wget
 import logging
 import shutil
 import tgcrypto
+import asyncio
 
 from PIL import Image
 from pyrogram import Client as Pyro, filters
@@ -46,9 +47,11 @@ async def help(_, msg: Message):
 async def mainreq(_, msg: Message):
    text = msg.text
    await msg.reply_text(msg)
-   if not bool(text.find(" ")):
+   if bool(text.find("/ul ")):
+     url = msg.command[1]
+   else:
      return await msg.reply_text("**ᴤᴇɴᴅ ʏᴏᴜʀ ʟɪɴᴋ ᴡɪᴛʜ ᴛʜᴇ ᴄᴍᴅ**")
-   url = text.replace("/ul ", "")
+   await asyncio.sleep(2)
    first = await msg.reply_text(f"**Processing Your Link:-**\n\n{url}")
    try:
         download = wget.download(url, DOWNLOAD_LOCATION)
