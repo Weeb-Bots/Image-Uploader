@@ -46,13 +46,20 @@ async def help(_, msg: Message):
 @AP.on_message(filters.private & filters.incoming & filters.command("ul", prefix))
 async def mainreq(_, msg: Message):
    text = msg.text
-   await msg.reply_text(msg)
+   # await msg.reply_text(msg)
    if bool(msg.command[1]):
      url = msg.command[1]
    else:
      return await msg.reply_text("**ᴤᴇɴᴅ ʏᴏᴜʀ ʟɪɴᴋ ᴡɪᴛʜ ᴛʜᴇ ᴄᴍᴅ**")
    await asyncio.sleep(2)
    first = await msg.reply_text(f"**Processing Your Link:-**\n\n{url}")
+   kk = await msg.reply_photo(url)
+   await msg.reply_text(kk)
+   return
+
+
+
+  # A New Way Trying
    try:
         download = wget.download(url, DOWNLOAD_LOCATION)
    except Exception as e:
