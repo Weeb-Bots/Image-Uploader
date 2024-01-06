@@ -5,6 +5,7 @@ import shutil
 import tgcrypto
 import asyncio
 
+from pySmartDL import SmartDL
 from PIL import Image
 from pyrogram import Client as Pyro, filters
 from pyrogram.types import Message
@@ -56,8 +57,9 @@ async def mainreq(_, msg: Message):
    await sleep(5)
 
   # A New Way Trying
+   obj = SmartDL(url, DOWNLOAD_LOCATION)
    try:
-        download = wget.download(url, DOWNLOAD_LOCATION)
+        obj.start()
    except Exception as e:
         LOGGER.info(str(e))
         await first.delete()
@@ -68,7 +70,7 @@ async def mainreq(_, msg: Message):
    except Exception as e:
      await msg.reply_text("--Download Completed✅--\n\n**Now Uploading Will Start Soon**")
    await first.delete()
-   await upload(download, msg)
+   await upload(obj.get_dest(), msg)
 
 async def upload(path, msg):
     if os.path.isdir(path):
@@ -79,6 +81,10 @@ async def upload(path, msg):
       return await msg.reply_text(f"`{path}` Not Found")
     else:
       pass
+    # Strange But True Case
+    if filename.startswith("photo-"):
+      os.rename(path, path+".jpg")
+      path = path+".jpg"
     up = await msg.reply_text("`Uploading...`")
     filename = path if not path.find("/") else path.split("/")[-1]
     cap = f"{filename}"
