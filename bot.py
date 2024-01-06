@@ -82,7 +82,7 @@ async def upload(path, msg):
     else:
       pass
     # Strange But True Case
-    if filename.startswith("photo-"):
+    if path.startswith("photo-"):
       os.rename(path, path+".jpg")
       path = path+".jpg"
     up = await msg.reply_text("`Uploading...`")
