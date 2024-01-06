@@ -53,7 +53,7 @@ async def mainreq(_, msg: Message):
    else:
      return await msg.reply_text("**ᴤᴇɴᴅ ʏᴏᴜʀ ʟɪɴᴋ ᴡɪᴛʜ ᴛʜᴇ ᴄᴍᴅ**")
    await asyncio.sleep(2)
-   first = await msg.reply_text(f"**Processing Your Link:-**\n\n{url}")
+   first = await msg.reply_text(f"**Processing Your Link:-**\n\n```{url}```")
    await sleep(5)
 
   # A New Way Trying
@@ -89,20 +89,21 @@ async def upload(path, msg):
     filename = path if not path.find("/") else path.split("/")[-1]
     cap = f"{filename}"
     try:
-      if filename.endswith((".mkv",".mp4")):
-         await msg.reply_video(path, caption=cap, quote=True, progress=progress, progress_args=(up))
       if filename.endswith((".jpg",".png",".jpeg",".webm")):
          img = Image.open(path)
          cap = f" ({img.width}x{img.height})\n\n@AnimePileWallpaper"
          await msg.reply_photo(path, caption=cap, quote=False, progress=progress, progress_args=(up))
-         await msg.reply_document(path, caption=cap, quote=False, force_document=True, progress=progress, progress_args=(up))
+         await msg.reply_document(path, caption=cap, quote=False, force_document=True,
+                                  progress=progress, progress_args=(up))
       else:
-         await msg.reply_document(path, caption=cap, quote=True, progress=progress, progress_args=(up))
+         os.remove(path)
+         return await msg.reply_text("No Valid File Type")
     except FloodWait as e:
        await sleep(e.x)
        await upload(path, msg)
     except Exception as e:
-      return await msg.reply_text("Error:\n`" + str(e) + "`")
+      await up.delete()
+      return await msg.reply_text("Upload Error:\n`" + str(e) + "`")
     await up.delete()
     os.remove(path)
     await sleep(2)
