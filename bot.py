@@ -53,11 +53,7 @@ async def mainreq(_, msg: Message):
      return await msg.reply_text("**ᴤᴇɴᴅ ʏᴏᴜʀ ʟɪɴᴋ ᴡɪᴛʜ ᴛʜᴇ ᴄᴍᴅ**")
    await asyncio.sleep(2)
    first = await msg.reply_text(f"**Processing Your Link:-**\n\n{url}")
-   kk = await msg.reply_photo(url)
-   await msg.reply_text(kk)
-   return
-
-
+   await sleep(5)
 
   # A New Way Trying
    try:
