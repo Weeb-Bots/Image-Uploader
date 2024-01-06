@@ -12,7 +12,6 @@ from pyrogram.types import Message
 from pyrogram.errors import FloodWait
 from asyncio import sleep
 from Config import Config
-from progress import progress
 
 # Logger Part
 LOGGER = logging.getLogger(__name__)
@@ -92,9 +91,8 @@ async def upload(path, msg):
       if filename.endswith((".jpg",".png",".jpeg",".webm")):
          img = Image.open(path)
          cap = f" ({img.width}x{img.height})\n\n@AnimePileWallpaper"
-         await msg.reply_photo(path, caption=cap, quote=False, progress=progress, progress_args=(up))
-         await msg.reply_document(path, caption=cap, quote=False, force_document=True,
-                                  progress=progress, progress_args=(up))
+         await msg.reply_photo(path, caption=cap, quote=False)
+         await msg.reply_document(path, caption=cap, quote=False, force_document=True)
       else:
          os.remove(path)
          return await msg.reply_text("No Valid File Type")
